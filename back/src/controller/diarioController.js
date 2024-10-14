@@ -1,11 +1,14 @@
+import { autenticar } from "../utils/jwtUtils.js";
+
 import { cadastrarDiario, consultarDiario, alterarDiario, deletarDiario } from "../repository/diarioRepository.js";
 import { Router } from "express";
 
+
 const endpoint = Router();
 
-endpoint.post('/inserir/diario', async (req,resp) => {
+endpoint.post('/inserir/diario', autenticar, async (req,resp) => {
     let diarioObj = req.body;
-
+        
     let id = await cadastrarDiario(diarioObj);
 
     resp.send({
@@ -13,7 +16,7 @@ endpoint.post('/inserir/diario', async (req,resp) => {
     })
 })
 
-endpoint.get('/consultar/diario', async (req,resp) => {
+endpoint.get('/consultar/diario', autenticar, async (req,resp) => {
     let id = await consultarDiario()
 
     resp.send(
@@ -21,7 +24,7 @@ endpoint.get('/consultar/diario', async (req,resp) => {
     )
 })
 
-endpoint.put('/alterar/diario/:id', async (req,resp) => {
+endpoint.put('/alterar/diario/:id', autenticar, async (req,resp) => {
     let id = req.params.id;
 
     let diarioObj= req.body;
@@ -31,7 +34,7 @@ endpoint.put('/alterar/diario/:id', async (req,resp) => {
     resp.send()
 })
 
-endpoint.delete('/deeltar/usuario/:id', async (req,resp) => {
+endpoint.delete('/deeltar/usuario/:id', autenticar, async (req,resp) => {
     let id = req.params.id;
     let resposta = await deletarDiario(id);
 

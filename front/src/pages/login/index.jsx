@@ -2,7 +2,7 @@ import './index.scss';
 import axios from 'axios';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
+import storage from 'local-storage'
 
 export default function Login(){
 
@@ -12,8 +12,8 @@ export default function Login(){
 
     async function Entrar(){
         let er = await axios.post(`http://localhost:5000/entrar/${nome}/${senha}`);
-
-        localStorage.getItem('Usuario', er);
+        let x = er.data.token
+        storage('Usuario', x);
         navigate('/home')
 
     }
@@ -38,7 +38,7 @@ export default function Login(){
                         <input value={senha} onChange={e=>setSenha(e.target.value)} type="text" placeholder=' Digite sua senha'/>
                     </div>
 
-                    <button> Entrar </button>
+                    <button onClick={Entrar}> Entrar </button>
                 </div>    
                 
         </div>

@@ -20,7 +20,7 @@ export async function Login(nome, senha) {
                     and ds_senha = ?
                 `;
     let resposta = await con.query(comando, [nome, senha]);
-    let into = resposta[0];
+    
 
-    return into;
+    return resposta[0][0];
 }
