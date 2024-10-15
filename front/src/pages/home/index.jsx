@@ -1,12 +1,26 @@
 import './index.scss';
 import axios from 'axios';
 import { useState, useEffect} from 'react';
-
+import storage from 'local-storage';
 
 export default function Home(){
     const [array, setArray] = useState([]);
     const [nome, setNome] = useState([]);
+    const [dia, setDia] = useState('');
+    const [conteudo, setConteudo] = useState('');
 
+    async function Cadastrar(){
+        let corpo = {
+            "dia": dia,
+            "conteudo": conteudo
+        }
+        const url = `http://localhost:5000/inserir/diario`;
+        let cadastro = await axios.post(url, corpo);
+        storage('cadastro', cadastro)
+        
+        
+        
+    }
 
 
     // async function Mostrartabela(){
@@ -29,17 +43,26 @@ export default function Home(){
                 <h1> Cadastra aqui seu diario </h1>
 
                 <div className="sla">
-                    <div className="inputes">
-                        <h1> Dia </h1>
-                        <input type="date"/>
+
+                    <div className="ic">
+                        <div className="inputes">
+                            <h1> Dia </h1>
+                            <input value={dia} onChange={ e=>setDia(e.target.value)} type="date"/>
+                        </div>
+
+                        <div className="inputes">
+                            <h1> Conteudo </h1>
+                            <input value={conteudo} onChange={e=>setConteudo(e.target.value)} type="text" placeholder='coloque seu conteudo aqui' />
+                        </div>
+                    </div>
+                    
+                    <div className="buton">
+                        <button onClick={Cadastrar} > Cadastrar</button>
                     </div>
 
-                    <div className="inputes">
-                        <h1> Conteudo </h1>
-                        <input type="text" placeholder='coloque seu conteudo aqui' />
-                    </div>
                 </div>
-        
+
+               
 
             </div>
 
