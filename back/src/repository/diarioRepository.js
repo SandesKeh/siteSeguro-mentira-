@@ -1,12 +1,12 @@
 import con from "./connection.js";
 
 
-export async function cadastrarDiario(diarioObj) {
+export async function cadastrarDiario(dia, conteudo, usuario) {
     let comando = `insert into tb_diario(dt_dia, ds_conteudo, id_usuario)
         values (?,?,?)
     `;
 
-    let resposta = await con.query(comando, [ diarioObj.dia, diarioObj.conteudo, diarioObj.usuario ]);
+    let resposta = await con.query(comando, [ dia, conteudo, usuario ]);
 
     let into = resposta[0];
 

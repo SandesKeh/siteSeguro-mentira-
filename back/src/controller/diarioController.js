@@ -6,10 +6,10 @@ import { Router } from "express";
 
 const endpoint = Router();
 
-endpoint.post('/inserir/diario', autenticar, async (req,resp) => {
-    let diarioObj = req.body;
+endpoint.post('/inserir/diario/:dia/:conteudo/:usuario', autenticar, async (req,resp) => {
+    let {dia, conteudo, usuario} = req.params;
         
-    let id = await cadastrarDiario(diarioObj);
+    let id = await cadastrarDiario(dia, conteudo, usuario);
 
     resp.send({
         id: id

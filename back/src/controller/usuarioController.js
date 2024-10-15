@@ -12,7 +12,7 @@ endpoint.post('/inserir/:nome/:senha', async (req,resp) => {
     resp.send({
         id: id
     })
-
+ 
 })
 
 endpoint.post('/entrar/:nome/:senha', async (req,resp) => {

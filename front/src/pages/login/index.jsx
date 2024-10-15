@@ -12,9 +12,14 @@ export default function Login(){
 
     async function Entrar(){
         let er = await axios.post(`http://localhost:5000/entrar/${nome}/${senha}`);
-        let x = er.data.token
-        storage('Usuario', x);
-        navigate('/home')
+        
+        if(er.data.erro != undefined){
+            alert(er.data.erro)
+        }
+        else{
+            storage('Usuario', er.data.token)
+            navigate('/home')
+        }
 
     }
 

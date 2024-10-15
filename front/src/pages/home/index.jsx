@@ -2,23 +2,30 @@ import './index.scss';
 import axios from 'axios';
 import { useState, useEffect} from 'react';
 import storage from 'local-storage';
+import {useNavigate} from 'react-router-dom'
 
 export default function Home(){
     const [array, setArray] = useState([]);
     const [nome, setNome] = useState([]);
     const [dia, setDia] = useState('');
     const [conteudo, setConteudo] = useState('');
+    const [token, setToken] = useState(null)
+
+    const navigate = useNavigate();
+
+useEffect(() => {
+    let cript = storage('Usuario');
+    setToken(cript)
+    
+
+    if(cript === undefined){
+        navigate('/');
+    }
+}, [])
 
     async function Cadastrar(){
-        let corpo = {
-            "dia": dia,
-            "conteudo": conteudo
-        }
-        const url = `http://localhost:5000/inserir/diario`;
-        let cadastro = await axios.post(url, corpo);
-        storage('cadastro', cadastro)
-        
-        
+        await axios.post(`http://localhost:5000/inserir/diario/${dia}/${conteudo}/1?query-token=${token}`);
+     
         
     }
 
@@ -37,7 +44,7 @@ export default function Home(){
 
     return(
         <div className="home">
-            <h1> Seja muito bem vindo </h1>
+            <h1> Seja muito bem vindo {nome} </h1>
 
             <div className="cadastrar">
                 <h1> Cadastra aqui seu diario </h1>
