@@ -14,18 +14,18 @@ export default function Login(){
         let er = await axios.post(`http://localhost:5000/entrar/${nome}/${senha}`);
         
         if(er.data.erro != undefined){
-            alert(er.data.erro)
+            alert(er.data.erro);
         }
         else{
-            storage('Usuario', er.data.token)
-            navigate('/home')
+            storage('Usuario', er.data.token);
+            navigate('/home');
         }
 
     }
 
     
 
-    return(
+    return (
 
         <div className="tela-login">
 
